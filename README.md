@@ -42,7 +42,7 @@ OPENAI_API_KEY=sk-...
 Alternatively you can pass it directly as an environment variable. After that you simply run the command below.
 
 ```
-docker-compose up 
+docker compose build --no-cache && docker compose up
 ```
 
 Once done the application will be availble on `http://localhost:3000`.
