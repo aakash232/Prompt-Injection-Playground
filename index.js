@@ -29,12 +29,12 @@ const openai = new OpenAIApi(configuration);
 app.post('/api/v1.0/pre-prompt', (req, res) => {
 	const prompt = req.body.input;
 	const completion = openai.createChatCompletion({
-		model: "gpt-3.5-turbo",
-		messages: [
-			{ role: "system", content: prePrompt },
-			{ role: "user", content: prompt }
-		]
-	})
+    model: "gpt-5-nano",
+    messages: [
+      { role: "system", content: prePrompt },
+      { role: "user", content: prompt },
+    ],
+  });
 	completion.then((data) => {
 		console.log(data)
 		console.log(data.data?.choices?.[0]?.message?.content)
@@ -63,12 +63,12 @@ app.post('/api/v1.0/input-deny-list', (req, res) => {
 	}
 
 	const completion = openai.createChatCompletion({
-		model: "gpt-3.5-turbo",
-		messages: [
-			{ role: "system", content: inputDenyListPrePrompt },
-			{ role: "user", content: prompt }
-		],
-	})
+    model: "gpt-5-nano",
+    messages: [
+      { role: "system", content: inputDenyListPrePrompt },
+      { role: "user", content: prompt },
+    ],
+  });
 	completion.then((data) => {
 		console.log(data)
 		console.log(data.data?.choices?.[0]?.message?.content)
@@ -90,25 +90,25 @@ app.post('/api/v1.0/classifier', (req, res) => {
 	];
 	const prompt = req.body.input;
 	const classification = openai.createChatCompletion({
-		model: "gpt-3.5-turbo",
-		messages: [
-			{ role: "system", content: classifierModerationPrompt },
-			{ role: "assistant", content: "true" },
-			{ role: "user", content: `The text: ${prompt}` }
-		]
-	})
+    model: "gpt-5-nano",
+    messages: [
+      { role: "system", content: classifierModerationPrompt },
+      { role: "assistant", content: "true" },
+      { role: "user", content: `The text: ${prompt}` },
+    ],
+  });
 	classification.then((data) => {
 		const response = data.data?.choices?.[0]?.message?.content;
 		console.log(response)
 		switch (response) {
 			case "true":
 				const completion = openai.createChatCompletion({
-					model: "gpt-3.5-turbo",
-					messages: [
-						{ role: "system", content: classifierPrePrompt },
-						{ role: "user", content: prompt }
-					]
-				});
+          model: "gpt-5-nano",
+          messages: [
+            { role: "system", content: classifierPrePrompt },
+            { role: "user", content: prompt },
+          ],
+        });
 				completion.then((data) => {
 					console.log(data)
 					console.log(data.data?.choices?.[0]?.message?.content)
